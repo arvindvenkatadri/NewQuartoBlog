@@ -1,6 +1,6 @@
 ---
 title: "Post With Code"
-author: "Harlow Malloc"
+author: "Arvind V"
 date: "2024-10-05"
 categories: [news, code, analysis]
 image: "image.jpg"
@@ -10,4 +10,61 @@ This is a post with executable code.
 
 ```{r}
 1 + 1
+
+```
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+library(tidyverse)
+library(ggformula)
+library(gfonts)
+library(sysfonts)
+library(showtext)
+
+sysfonts::font_add(family = "Roboto Condensed", 
+  regular = "../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Regular.ttf",
+  bold = "../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Bold.ttf",
+  italic = "../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Italic.ttf",
+  bolditalic = "../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-BoldItalic.ttf")
+
+sysfonts::font_add(family = "Fira Code", 
+  regular = "../../fonts/downloaded/Fira_Code/static/FiraCode-Regular.ttf",
+  bold = "../../fonts/downloaded/Fira_Code/static/FiraCode-Bold.ttf",
+  #italic = "../../fonts/downloaded/Fira_Code/static/FiraCode-Italic.ttf",
+  #bolditalic = "../../fonts/downloaded/Fira_Code/static/FiraCode-BoldItalic.ttf"
+  )
+
+showtext_auto(enable = TRUE) #enable showtext
+
+ggplot2::update_geom_defaults(geom = "text", new = list(family = "Roboto Condensed", size = 14))
+
+```
+
+### Our first graph
+
+Let us look at the variable names:
+
+```{r}
+penguins %>% names()
+
+```
+
+OK, let's do a scatter plot:
+
+```{r}
+penguins %>% drop_na() %>% 
+  gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %>% 
+  gf_labs(title = "My Penguin Plot") %>% 
+  gf_refine(annotate(geom = "text", label = "Important\n Points", x = 220, y = 3500, size = 5),
+            annotate(geom = "rect", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),
+            annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,
+    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm')))) %>% 
+  gf_theme(theme = theme_classic()) %>% 
+  gf_refine(theme(
+    plot.title = element_text(family = "Roboto Condensed", face = "bold", size = 24),
+    plot.title.position = "plot",
+    legend.title = element_text(family = "Fira Code", size = 18)))
+
 ```

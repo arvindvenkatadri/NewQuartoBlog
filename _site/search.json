@@ -18,13 +18,13 @@
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
     "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2\n\n\n\nlibrary(tidyverse)\nlibrary(ggformula)\nlibrary(gfonts)\nlibrary(sysfonts)\nlibrary(showtext)\n\nsysfonts::font_add(family = \"Roboto Condensed\", \n  regular = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Regular.ttf\",\n  bold = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Bold.ttf\",\n  italic = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Italic.ttf\",\n  bolditalic = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-BoldItalic.ttf\")\n\nsysfonts::font_add(family = \"Fira Code\", \n  regular = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Regular.ttf\",\n  bold = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Bold.ttf\",\n  #italic = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Italic.ttf\",\n  #bolditalic = \"../../fonts/downloaded/Fira_Code/static/FiraCode-BoldItalic.ttf\"\n  )\n\nshowtext_auto(enable = TRUE) #enable showtext\n\nggplot2::update_geom_defaults(geom = \"text\", new = list(family = \"Roboto Condensed\", size = 14))\n\n\nOur first graph\nLet us look at the variable names:\n\npenguins %&gt;% names()\n\n[1] \"species\"     \"island\"      \"bill_len\"    \"bill_dep\"    \"flipper_len\"\n[6] \"body_mass\"   \"sex\"         \"year\"       \n\n\nOK, let’s do a scatter plot:\n\npenguins %&gt;% drop_na() %&gt;% \n  gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %&gt;% \n  gf_labs(title = \"My Penguin Plot\") %&gt;% \n  gf_refine(annotate(geom = \"text\", label = \"Important\\n Points\", x = 220, y = 3500, size = 5),\n            annotate(geom = \"rect\", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),\n            annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,\n    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm')))) %&gt;% \n  gf_theme(theme = theme_classic()) %&gt;% \n  gf_refine(theme(\n    plot.title = element_text(family = \"Roboto Condensed\", face = \"bold\", size = 24),\n    plot.title.position = \"plot\",\n    legend.title = element_text(family = \"Fira Code\", size = 18)))"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "NewQuartoBlog",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 5, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 2, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Post With Code\n\n\n\nnews\n\ncode\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 5, 2024\n\n\nArvind V\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 2, 2024\n\n\nTristan O’Malley\n\n\n\n\n\nNo matching items"
   }
 ]
