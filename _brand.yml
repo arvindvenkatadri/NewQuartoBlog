@@ -13,17 +13,13 @@ typography:
   fonts:
     - family: Open Sans
       source: google
-      # source: file
-      # files:
-      #   - path: fonts/open-sans-v43-latin-regular.ttf
-      #   - path: fonts/open-sans-v43-latin-italic.ttf
-      #     style: italic
+      
     - family: Jura
       source: google
-    # Roboto Condensed
+
     - family: Roboto Condensed
       source: google
-    # Fira Code
+
     - family: Fira Code
       source: google
 
