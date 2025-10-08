@@ -2,7 +2,8 @@ project:
   type: website
 
 website:
-  title: "NewQuartoBlog"
+  title: "Project Peasants"
+  site-url: "https://project-peasants.netlify.app"
   navbar:
     right:
       - about.qmd
@@ -10,14 +11,17 @@ website:
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+        
+author: Arvind V.
+
 format:
   html:
     theme: cosmo
     css: styles.css
-    code-block-border-left: true
+    code-block-border-left: "black"
     code-copy: true
     code-links: true
-    code-block-bg: true
+    code-block-bg: "moccasin"
     format-links: true
     highlight-style: espresso
 editor: visual

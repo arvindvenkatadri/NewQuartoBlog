@@ -1,17 +1,73 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog"
-  },
-  {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "objectID": "classwork/Day1/index.html",
+    "href": "classwork/Day1/index.html",
+    "title": "Day1",
     "section": "",
     "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "NewQuartoBlog",
+    "section": "",
+    "text": "Date\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n \n\n\nUsing Observable\n\n\nArvind V.\n\n\n\n\n\n\n \n\n\nQuadratic Equations with Complex Roots\n\n\nArvind V.\n\n\n\n\n\n\nOct 5, 2024\n\n\nPost With Code\n\n\nArvind V\n\n\n\n\n\n\nOct 2, 2024\n\n\nWelcome To My Blog\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#assignments",
+    "href": "index.html#assignments",
+    "title": "NewQuartoBlog",
+    "section": "",
+    "text": "Date\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\n \n\n\nUsing Observable\n\n\nArvind V.\n\n\n\n\n\n\n \n\n\nQuadratic Equations with Complex Roots\n\n\nArvind V.\n\n\n\n\n\n\nOct 5, 2024\n\n\nPost With Code\n\n\nArvind V\n\n\n\n\n\n\nOct 2, 2024\n\n\nWelcome To My Blog\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html#classwork",
+    "href": "index.html#classwork",
+    "title": "NewQuartoBlog",
+    "section": "Classwork",
+    "text": "Classwork\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\n\nTitle\n\n\n\nAuthor\n\n\n\n\n\n\n\n\nOct 2, 2024\n\n\nDay1\n\n\nArvind v\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html",
+    "href": "posts/20-quadratic/index.html",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(ggformula)\nlibrary(mosaic)"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html#r-packages",
+    "href": "posts/20-quadratic/index.html#r-packages",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(ggformula)\nlibrary(mosaic)"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html#quadratic-roots-and-equations-family",
+    "href": "posts/20-quadratic/index.html#quadratic-roots-and-equations-family",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "Quadratic Roots and Equations Family",
+    "text": "Quadratic Roots and Equations Family\n\n\nCode\nquad_eq &lt;- function(a, b, c, x) {\n  a*x^2 + b*x + c\n}\n\nparabola &lt;- function(a,x){a*x^2}\nline &lt;- function(b,c, x){-b*x - c}\ndiscrim &lt;- function(a,b,c){b^2 - 4*a*c}\nroots &lt;- function(a,b,c, discrim){\n  dplyr::if_else(discrim &gt;= 0, \n            tibble(Re1 = (-b + sqrt(discrim))/(2*a), \n                         Im1 = 0,\n                         Re2 = (-b -sqrt(discrim))/(2*a),\n                         Im2 = 0), \n            \n            tibble(Re1 = -b/(2*a),\n                          Im1 = sqrt(abs(discrim))/(2*a), \n                          Re2 = -b/(2*a),\n                          Im2 = -sqrt(abs(discrim))/(2*a))\n                   )\n}\n\n## Roots Graph Function\n\nroot_graph &lt;- function(a,b,c){\n  p &lt;- expand_grid(tibble(a,b,c,\n                     x = list(seq(from = -5, to = 5, \n                                  by = 0.1)))) %&gt;% \n  \n  dplyr::mutate(discrim = discrim(a,b,c)) %&gt;%\n  \n  dplyr::mutate(geoms = purrr::pmap(\n    .l = list(a,b,c, x),\n    .f = \\(a,b,c, x) tibble(x = x, \n                            curve_eq = parabola(a,x), \n                            line_eq = line(b,c,x),\n                            quad_eq = quad_eq(a,b,c,x)))) %&gt;%\n          \n  dplyr::mutate(roots = purrr::pmap(\n    .l = list(a,b,c, discrim),\n    .f = \\(a,b,c, discrim) roots(a,b,c, discrim))) %&gt;% \n  \n    unnest(roots) %&gt;% \n    select(a,b,c, discrim, Re1, Im1, Re2, Im2) %&gt;%\n    mutate(sign = dplyr::if_else(discrim &lt; 0, \"Complex\", \"Real\")) %&gt;% \n  gf_point(Im1 ~ Re1, color = ~ sign) %&gt;% \n  gf_point(Im2 ~ Re2, color = ~ sign) %&gt;% \n  gf_labs(title = \"Roots of Quadratic Equations\",\n          subtitle = \"\",\n          x = \"Real Part\",\n          y = \"Imaginary Part\") %&gt;%\n  # gf_text(label = ~discrim, nudge_y = 0.25) %&gt;%\n  gf_refine(coord_cartesian(), theme_classic())\n  \n  return(p)\n}\n\n\nLet us set up a data frame containing several values for a, b, and c.\n\n\nCode\nquad_data &lt;- expand_grid(\n  a = c(-5, -3, -1, 1, 3, 5),\n  c = c(-5, -3, -1, 1, 3, 5),\n  b = c(-5, -3, -1, 1, 3, 5),\n  x = list(seq(from = -5, to = 5, by = 0.1)))\n\nmy_charts &lt;- quad_data %&gt;% \n  \n  dplyr::mutate(discrim = discrim(a,b,c)) %&gt;%\n  \n  dplyr::mutate(geoms = purrr::pmap(\n    .l = list(a,b,c, x),\n    .f = \\(a,b,c, x) tibble(x = x, \n                            curve_eq = parabola(a,x), \n                            line_eq = line(b,c,x),\n                            quad_eq = quad_eq(a,b,c,x)))) %&gt;%\n  \n  # dplyr::mutate(graphs = pmap(\n  #   .l = list(geoms),\n  #   .f = \\(geoms) (ggplot() +\n  #       geom_line(aes(x = x, y = curve_eq), data = geoms) +\n  #       geom_line(aes(x = x, y = line_eq), data = geoms, color = \"red\") + theme_minimal()))) %&gt;% \n          \n  dplyr::mutate(roots = purrr::pmap(\n    .l = list(a,b,c, discrim),\n    .f = \\(a,b,c, discrim) roots(a,b,c, discrim)))\n    \n# for(i in 1:nrow(my_charts)) {\n#   print(my_charts$graphs[[i]])\n# }\n\nmy_charts_selected &lt;- my_charts %&gt;% \n  unnest(roots) %&gt;% \n  select(a,b,c, discrim, Re1, Im1, Re2, Im2) %&gt;%\n  mutate(sign = dplyr::if_else(discrim &lt; 0, \"Complex\", \"Real\")) \nmy_charts_selected\n\n\n\n  \n\n\n\nCode\nmy_charts_selected %&gt;% \n  gf_point(Im1 ~ Re1, color = ~ sign) %&gt;% \n  gf_point(Im2 ~ Re2, color = ~ sign) %&gt;% \n  gf_labs(title = \"Roots of Quadratic Equations\",\n          subtitle = \"a, b, c all varying\",\n          x = \"Real Part\",\n          y = \"Imaginary Part\") %&gt;%\n  # gf_text(label = ~discrim, nudge_y = 0.25) %&gt;%\n  gf_refine(coord_cartesian(), theme_classic())"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html#slope-b-constant-c-intercept-varying",
+    "href": "posts/20-quadratic/index.html#slope-b-constant-c-intercept-varying",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "Slope b Constant, c intercept varying",
+    "text": "Slope b Constant, c intercept varying\n\nCode\n# Slope b = 1\nexpand_grid(\n  a = c(1, 1,1,1,1,1),\n  c = c(-5, -3, -1, 1, 3, 5),\n  b = c(1, 1,1,1,1,1),\n  x = list(seq(from = -5, to = 5, by = 0.1))) %&gt;% \n  \n  dplyr::mutate(discrim = discrim(a,b,c)) %&gt;%\n  \n  dplyr::mutate(geoms = purrr::pmap(\n    .l = list(a,b,c, x),\n    .f = \\(a,b,c, x) tibble(x = x, \n                            curve_eq = parabola(a,x), \n                            line_eq = line(b,c,x),\n                            quad_eq = quad_eq(a,b,c,x)))) %&gt;%\n  dplyr::mutate(roots = purrr::pmap(\n    .l = list(a,b,c, discrim),\n    .f = \\(a,b,c, discrim) roots(a,b,c, discrim))) %&gt;% \n  unnest(roots) %&gt;% \n  select(a,b,c, discrim, Re1, Im1, Re2, Im2) %&gt;%\n  mutate(sign = dplyr::if_else(discrim &lt; 0, \"Complex\", \"Real\")) %&gt;% \n  gf_point(Im1 ~ Re1, color = ~ sign) %&gt;% \n  gf_point(Im2 ~ Re2, color = ~ sign) %&gt;% \n  gf_labs(title = \"Roots of Quadratic Equations\",\n          subtitle = \"Slope b = 1, Intercept c varying\",\n          x = \"Real Part\",\n          y = \"Imaginary Part\") %&gt;%\n  # gf_text(label = ~discrim, nudge_y = 0.25) %&gt;%\n  gf_refine(coord_cartesian(), theme_classic())\n# Slope b = 3\nexpand_grid(\n  a = c(1, 1,1,1,1,1),\n  c = c(-5, -3, -1, 1, 3, 5),\n  b = 3,\n  x = list(seq(from = -5, to = 5, by = 0.1))) %&gt;% \n  \n  dplyr::mutate(discrim = discrim(a,b,c)) %&gt;%\n  \n  dplyr::mutate(geoms = purrr::pmap(\n    .l = list(a,b,c, x),\n    .f = \\(a,b,c, x) tibble(x = x, \n                            curve_eq = parabola(a,x), \n                            line_eq = line(b,c,x),\n                            quad_eq = quad_eq(a,b,c,x)))) %&gt;%\n  dplyr::mutate(roots = purrr::pmap(\n    .l = list(a,b,c, discrim),\n    .f = \\(a,b,c, discrim) roots(a,b,c, discrim))) %&gt;% \n  unnest(roots) %&gt;% \n  select(a,b,c, discrim, Re1, Im1, Re2, Im2) %&gt;%\n  mutate(sign = dplyr::if_else(discrim &lt; 0, \"Complex\", \"Real\")) %&gt;% \n  gf_point(Im1 ~ Re1, color = ~ sign) %&gt;% \n  gf_point(Im2 ~ Re2, color = ~ sign) %&gt;% \n  gf_labs(title = \"Roots of Quadratic Equations\",\n          subtitle = \"Slope b = 3, Intercept c varying\",\n          x = \"Real Part\",\n          y = \"Imaginary Part\") %&gt;%\n  # gf_text(label = ~discrim, nudge_y = 0.25) %&gt;%\n  gf_refine(coord_cartesian(), theme_classic())"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html#slope-b-varying-intercept-constant",
+    "href": "posts/20-quadratic/index.html#slope-b-varying-intercept-constant",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "Slope b varying, intercept constant",
+    "text": "Slope b varying, intercept constant\n\n\nCode\nquad_data &lt;- expand_grid(\n  a = c(1, 1,1,1,1,1),\n  b = seq(-3, 3, by = 0.25),\n  c = c(1, 1,1,1,1,1),\n  x = list(seq(from = -5, to = 5, by = 0.1)))\n\nquad_data %&gt;% \n  \n  dplyr::mutate(discrim = discrim(a,b,c)) %&gt;%\n  \n  dplyr::mutate(geoms = purrr::pmap(\n    .l = list(a,b,c, x),\n    .f = \\(a,b,c, x) tibble(x = x, \n                            curve_eq = parabola(a,x), \n                            line_eq = line(b,c,x),\n                            quad_eq = quad_eq(a,b,c,x)))) %&gt;%\n  dplyr::mutate(roots = purrr::pmap(\n    .l = list(a,b,c, discrim),\n    .f = \\(a,b,c, discrim) roots(a,b,c, discrim))) %&gt;% \n  unnest(roots) %&gt;% \n  select(a,b,c, discrim, Re1, Im1, Re2, Im2) %&gt;%\n  mutate(sign = dplyr::if_else(discrim &lt; 0, \"Complex\", \"Real\")) %&gt;% \n  gf_point(Im1 ~ Re1, color = ~ sign) %&gt;% \n  gf_point(Im2 ~ Re2, color = ~ sign) %&gt;% \n  gf_labs(title = \"Roots of Quadratic Equations\",\n          x = \"Real Part\",\n          y = \"Imaginary Part\") %&gt;%\n  # gf_text(label = ~discrim, nudge_y = 0.25) %&gt;%\n  gf_refine(coord_fixed(), theme_classic())"
+  },
+  {
+    "objectID": "posts/20-quadratic/index.html#observations",
+    "href": "posts/20-quadratic/index.html#observations",
+    "title": "Quadratic Equations with Complex Roots",
+    "section": "Observations",
+    "text": "Observations\nThe roots of the quadratic equation seem to have a similar kind of loci as we saw ( long ago!) with Root Locus plots for control systems. The roots are real initially and converge towards zero (b = 0, c = 0; discriminant = 0) and then diverge into the complex plane as the discriminant becomes negative.\nHow do I plot this on a 3D plot showing the parabola (y = ax^2) and the line (y = -bx - c) intersecting in the complex plane? and how do I animate the transition from real to complex roots?"
   },
   {
     "objectID": "posts/post-with-code/index.html",
@@ -21,10 +77,52 @@
     "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2\n\n\n\nlibrary(tidyverse)\nlibrary(ggformula)\nlibrary(gfonts)\nlibrary(sysfonts)\nlibrary(showtext)\n\nsysfonts::font_add(family = \"Roboto Condensed\", \n  regular = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Regular.ttf\",\n  bold = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Bold.ttf\",\n  italic = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-Italic.ttf\",\n  bolditalic = \"../../fonts/downloaded/Roboto_Condensed/static/RobotoCondensed-BoldItalic.ttf\")\n\nsysfonts::font_add(family = \"Fira Code\", \n  regular = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Regular.ttf\",\n  bold = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Bold.ttf\",\n  #italic = \"../../fonts/downloaded/Fira_Code/static/FiraCode-Italic.ttf\",\n  #bolditalic = \"../../fonts/downloaded/Fira_Code/static/FiraCode-BoldItalic.ttf\"\n  )\n\nshowtext_auto(enable = TRUE) #enable showtext\n\nggplot2::update_geom_defaults(geom = \"text\", new = list(family = \"Roboto Condensed\", size = 14))\n\n\nOur first graph\nLet us look at the variable names:\n\npenguins %&gt;% names()\n\n[1] \"species\"     \"island\"      \"bill_len\"    \"bill_dep\"    \"flipper_len\"\n[6] \"body_mass\"   \"sex\"         \"year\"       \n\n\nOK, let’s do a scatter plot:\n\npenguins %&gt;% drop_na() %&gt;% \n  gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %&gt;% \n  gf_labs(title = \"My Penguin Plot\") %&gt;% \n  gf_refine(annotate(geom = \"text\", label = \"Important\\n Points\", x = 220, y = 3500, size = 5),\n            annotate(geom = \"rect\", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),\n            annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,\n    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm')))) %&gt;% \n  gf_theme(theme = theme_classic()) %&gt;% \n  gf_refine(theme(\n    plot.title = element_text(family = \"Roboto Condensed\", face = \"bold\", size = 24),\n    plot.title.position = \"plot\",\n    legend.title = element_text(family = \"Fira Code\", size = 18)))"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "NewQuartoBlog",
+    "objectID": "posts/10-obs-barchart/index.html",
+    "href": "posts/10-obs-barchart/index.html",
+    "title": "Using Observable",
     "section": "",
-    "text": "Post With Code\n\n\n\nnews\n\ncode\n\nanalysis\n\n\n\n\n\n\n\n\n\nOct 5, 2024\n\n\nArvind V\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nOct 2, 2024\n\n\nTristan O’Malley\n\n\n\n\n\nNo matching items"
+    "text": "This post explores the use of Observable (OJS) for data visualization, particularly using the plot library. We will use the penguins dataset from the palmerpenguins package."
+  },
+  {
+    "objectID": "posts/10-obs-barchart/index.html#setting-up-ojs-packages",
+    "href": "posts/10-obs-barchart/index.html#setting-up-ojs-packages",
+    "title": "Using Observable",
+    "section": "Setting up OJS Packages",
+    "text": "Setting up OJS Packages\n\n\nCode\n//Import `aquero`, a `dplyr` equivalent in Observable:\nimport {aq, op} from \"@uwdata/arquero\""
+  },
+  {
+    "objectID": "posts/10-obs-barchart/index.html#reading-the-data",
+    "href": "posts/10-obs-barchart/index.html#reading-the-data",
+    "title": "Using Observable",
+    "section": "Reading the Data",
+    "text": "Reading the Data\nLet’s import and view the penguins dataset:\n\n\nCode\npenguins = FileAttachment(\"palmer-penguins.csv\").csv({ typed: true })\n\n\n\n\n\n\n\n\n\nCode\n//df_penguins = aq.from(penguins)\n//Inputs.table(df_penguins)\n//\nInputs.table(penguins)"
+  },
+  {
+    "objectID": "posts/10-obs-barchart/index.html#discovering-plot-library-in-ojs",
+    "href": "posts/10-obs-barchart/index.html#discovering-plot-library-in-ojs",
+    "title": "Using Observable",
+    "section": "Discovering plot library in OJS",
+    "text": "Discovering plot library in OJS\nLet’s create a slider for making variable histograms with facetting:\n\n\nCode\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\"], \n    label: \"Islands:\"\n  }\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPut a interactive filter on the data:\n\n\nCode\nfiltered = penguins.filter(function(data) {\n  return bill_length_min &lt; data.bill_length_mm &&\n         islands.includes(data.island);\n})\n\n\n\n\n\n\n\n\n\nCode\nPlot.rectY(filtered, \n  Plot.binX(\n    {y: \"count\"}, \n    {x: \"body_mass_g\", fill: \"species\", thresholds: 20}\n  ))\n  .plot({\n    title: \"Facetted Histogram\",\n    caption: \"Figure 1. A chart with a title, subtitle, and caption.\",\n    facet: {\n      data: filtered,\n      x: \"sex\",\n      y: \"species\",\n      marginRight: 80\n    },\n    marks: [\n      Plot.frame(),\n    ]\n  }\n)\n\n\n\n\n\n\n\n\n\nCode\nPlot.plot({\n  grid: true,\n  inset: 10,\n  //aspectRatio: 0.05,\n  color: {legend: true},\n  marks: [\n    Plot.frame(),\n    Plot.rectY(df_penguins, \n      Plot.binX({y: \"count\"}, {x: \"body_mass_g\"}, \n                {color: \"species\"}, {fill: \"species\"})\n              ),\n    Plot.ruleY([0])\n  ],\n  title: \"TITLE: Histogram of Body Mass of Penguins\",\n  subtitle: \"SUBTITLE: Using OJS\",\n  caption: \"Figure 1. A chart with a title, subtitle, and caption.\",\n})\n\n\n\n\n\n\n\n\n\nFigure 1\n\n\n\n\nFigure 1 is a histogram.\nTrying to master the syntax, step by step:\n\n\nCode\nPlot.boxX(\n// Data \n  df_penguins, \n  \n// Aesthetics\n          {x: \"body_mass_g\", y: \"species\", fill: \"species\", sort: {y: \"x\"}}\n)\n// Plot options, concatenated\n  .plot({\n    title: \"Box Plot in Observable\",\n    subtitle: \"Getting hold of the Syntax\",\n    caption: \"Box Plot on Log scale\",\n    height: 400,\n    marginLeft: 100,\n    \n// scales\n    x:{type:\"log\",}})\n\n\n\n\n\n\n\nLet’s try the same plot with facetting, AND with change in colour palette:\n\n\nCode\nPlot.boxX(\n// Data \n  df_penguins, \n  \n// Aesthetics\n          {x: \"body_mass_g\", y: \"species\", fy: \"island\", \n          fill: \"species\", \n          sort: {y: \"x\"},\n          }\n)\n// Plot options, concatenated\n  .plot({\n    title: \"Box Plot in Observable\",\n    subtitle: \"Getting hold of the Syntax\",\n    caption: \"Box Plot on Log scale\",\n// scales\n    x:{type:\"log\"}})\n\n\n\n\n\n\n\n\n\nCode\nPlot.plot({\n\n//plots to overlay, inside \"marks\". Pass data for each! No inheritance!\n  marks: [\n    Plot.ruleY([0]), // x-axis intercept!!\n    Plot.areaY(aapl, {x: \"Date\", y: \"Close\", fillOpacity: 0.2}),\n    Plot.lineY(aapl, {x: \"Date\", y: \"Close\"})\n  ],\n  y: {\n    type: \"log\",\n    domain: [50, 300],\n    grid: true\n  }\n})\n\n\n\n\n\n\n\n\nScatter Plot\n\n\nCode\nPlot.plot({\n  grid: true,\n  inset: 10,\n  color: {legend: true},\n  x: {labelAnchor: \"center\"},\n  y: {labelAnchor: \"center\"},\n  //title: \"Scatter Plot for Penguins\",\n  marginLeft: 40,\n  marks: [\n    Plot.frame(),\n    Plot.dot(penguins, \n      {x: \"bill_length_mm\", y: \"bill_depth_mm\", \n      stroke: \"black\", fill: \"species\", strokeWidth: 0.2})\n  ]\n})\n\n\n\n\n\n\n\n\n\nGrouping and Aggregation within Plot\n\n\nCode\nPlot.plot({\n  marginLeft: 80,\n  marginRight: 80,\n  aspectRatio: 0.05,\n  x: {labelAnchor: \"center\", domain: [0, 200]},\n  marks: [\n    Plot.barX(penguins, Plot.groupY({x: \"count\"}, {y: \"species\"})),\n    Plot.ruleX([0])\n  ]\n})"
+  },
+  {
+    "objectID": "posts/10-obs-barchart/index.html#trying-counts-and-summaries-with-aquero",
+    "href": "posts/10-obs-barchart/index.html#trying-counts-and-summaries-with-aquero",
+    "title": "Using Observable",
+    "section": "Trying Counts and Summaries with aquero",
+    "text": "Trying Counts and Summaries with aquero\n\n\nCode\ndf_penguins = aq.from(penguins)\ndf_penguins.groupby(\"species\").count().view()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCode\ndf_penguins\n  .groupby(\"species\")\n  .rollup({ mean: (d) =&gt; op.mean(d.body_mass_g) })\n  .view()"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
   }
 ]

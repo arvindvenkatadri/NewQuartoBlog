@@ -1,0 +1,1 @@
+Sitemap: https://project-peasants.netlify.app/sitemap.xml

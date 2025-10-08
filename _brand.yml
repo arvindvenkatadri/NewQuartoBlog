@@ -27,6 +27,7 @@ typography:
   headings: Jura
   monospace: 
     family: Roboto Condensed
+    
   monospace-block: 
     family: Fira Code
     weight: "bold"
