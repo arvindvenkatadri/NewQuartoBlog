@@ -1,0 +1,7 @@
+title: Lordicon support
+author: Jeffrey Girard
+version: 0.5.4
+contributes:
+  shortcodes:
+    - lordicon.lua
+source: jmgirard/lordicon@v0.5.4
