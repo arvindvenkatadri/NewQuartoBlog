@@ -16,9 +16,9 @@ library(ggplot2)
 
 # Add three Google Fonts
 # Arguments: font family name, Google Font name
-font_add_google("Roboto", "Roboto")
+font_add_google("Roboto Condensed", "Roboto Condensed")
 font_add_google("Lato", "Lato")
-font_add_google("Montserrat", "Montserrat")
+font_add_google("Alegreya", "Alegreya")
 
 # Tell R to use showtext for all subsequent plots
 showtext_auto()
@@ -28,20 +28,67 @@ showtext_opts(dpi = 300)
 
 # Set a site-wide ggplot theme using the loaded fonts
 ggplot2::theme_set(
-  ggplot2::theme_minimal(
+  ggplot2::theme_bw(
     base_size = 14,
-    base_family = "Roboto"
+    base_family = "Roboto Condensed"
   )
 )
 
-ggplot2::theme_update(
-  plot.title = ggplot2::element_text(
-    family = "Montserrat",
-    face = "bold",
-    size = 16
-  ),
-  text = ggplot2::element_text(
-    family = "Lato"
-  )
+## Set the ggplot theme
+theme_madhatter <- function(base_size = 10, exhibit = TRUE) {
+  th <- ggplot2::theme_bw(base_size = base_size) +
+    ggplot2::theme(
+      plot.margin = ggplot2::margin(t = 1, r = 2, b = 1, l = 1, unit = "cm"),
+      axis.title = ggplot2::element_text(
+        family = "Roboto Condensed",
+        size = 10
+      ),
+      axis.text = ggplot2::element_text(
+        family = "Roboto Condensed",
+        size = 8
+      ),
+      legend.text = ggplot2::element_text(
+        family = "Roboto Condensed",
+        size = 6
+      ),
+      legend.title = ggplot2::element_text(
+        family = "Alegreya",
+        size = 8
+      ),
+      plot.title = ggplot2::element_text(
+        family = "Alegreya",
+        size = 14,
+        face = "bold"
+      ),
+      plot.title.position = "plot",
+      plot.subtitle = ggplot2::element_text(
+        family = "Alegreya",
+        size = 10
+      ),
+      plot.caption = ggplot2::element_text(
+        family = "Alegreya",
+        size = 6
+      ),
+      plot.caption.position = "plot"
+    )}
+
+## Set the theme for all plots
+ggplot2::theme_set(theme_madhatter())
+
+## Update the fonts for geoms as well!
+ggplot2::update_geom_defaults(geom = "text", new = list(
+  family = "Roboto Condensed",
+  face = "plain",
+  size = 3.5,
+  color = "#2b2b2b"
 )
+)
+ggplot2::update_geom_defaults(geom = "label", new = list(
+  family = "Roboto Condensed",
+  face = "plain",
+  size = 3.5,
+  color = "#2b2b2b"
+)
+)
+
 ```

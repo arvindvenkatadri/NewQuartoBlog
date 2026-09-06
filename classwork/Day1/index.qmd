@@ -42,10 +42,20 @@ in the file `_setup.qmd`.
 ```{r}
 penguins %>% drop_na() %>% 
   gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %>% 
-  gf_labs(title = "My Penguin Plot") %>% 
+  gf_labs(title = "My Penguin Plot", x = "Flipper Length", y = "Body Mass (gms)") %>% 
   gf_refine(annotate(geom = "text", label = "Important\n Points", x = 220, y = 3500, size = 5),
             annotate(geom = "rect", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),
             annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,
-    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm'))))
+    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm')))) %>%
+  
+  ## Labels and Title
+  gf_labs(
+    title = 'Bill Dimensions of Brush-Tailed Penguins (Pygoscelis)',
+    subtitle = 'A scatter plot of bill depth versus bill length.',
+    caption = 'Data: Gorman, Williams & Fraser (2014) PLoS ONE',
+    x = 'Bill Length (mm)', 
+    y = 'Bill Depth (mm)',
+    color = 'Body mass (g)'
+  ) 
 
 ```
