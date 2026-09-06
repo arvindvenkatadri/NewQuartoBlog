@@ -11,3 +11,41 @@ This is the first post in a Quarto blog. Welcome!
 
 Since this post doesn't specify an explicit `image`, the first image in
 the post will be used in the listing page of posts.
+
+## Setting up R Packages
+
+{{< include /_setup.qmd >}}
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(ggformula)
+
+```
+
+### Our first graph
+
+Let us look at the variable names:
+
+```{r}
+penguins %>% names()
+
+```
+
+OK, let's do a scatter plot: this chart should be automatically
+formatted and themed using the `ggplot2 theme` defined at project root
+in the file `_setup.qmd`.
+
+```{r}
+penguins %>% drop_na() %>% 
+  gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %>% 
+  gf_labs(title = "My Penguin Plot") %>% 
+  gf_refine(annotate(geom = "text", label = "Important\n Points", x = 220, y = 3500, size = 5),
+            annotate(geom = "rect", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),
+            annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,
+    linewidth = 1, curvature = -0.5, arrow = arrow(length = unit(0.5, 'cm'))))
+
+```

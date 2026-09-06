@@ -24,5 +24,7 @@ format:
     code-block-bg: "moccasin"
     format-links: true
     highlight-style: espresso
+    fig-height: 4
+    fig-width: 6
 editor: visual
 

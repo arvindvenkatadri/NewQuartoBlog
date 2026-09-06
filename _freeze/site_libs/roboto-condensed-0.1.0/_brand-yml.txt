@@ -1,0 +1,60 @@
+meta: 
+  name: "Arvind's Website Branding"
+
+color:
+  palette:
+    white: "#FFFFFF"
+    black: "#151515"
+    blue: "#447099"
+    orange: "#EE6331"
+    green: "#72994E"
+    teal: "#419599"
+    burgundy: "#9A4665"
+
+  foreground: black
+  background: white
+  primary: blue
+  secondary: "#707073"
+  tertiary: "#C2C2C4"
+  success: green
+  info: teal
+  warning: orange
+  danger: burgundy
+  light: white
+  dark: "#404041"
+  
+typography:
+  fonts:
+    # Local files
+    - family: Open Sans
+      source: file
+      files:
+        - path: fonts/downloaded/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf
+        - path: fonts/downloaded/Open_Sans/OpenSans-Italic-VariableFont_wdth,wght.ttf
+          style: italic
+    - family: Roboto Condensed
+      source: file
+      files: 
+        - path: fontsdownloaded/Roboto_Condensed/RobotoCondensed-VariableFont_wdth,wght.ttf
+    - family: Fira Code
+      source: file
+      files: 
+        - path: fonts/downloaded/Fira_Code/FiraCode-VariableFont_wght.ttf
+
+  base:
+    family: Roboto Condensed
+    line-height: 1.25
+    size: 1rem
+  headings:
+    family: Open Sans
+    color: primary
+    weight: 600
+  monospace:
+    family: Fira Code
+    size: 0.9em
+
+defaults:
+  bootstrap:
+    defaults:
+      enable-rounded: false
+      link-decoration: none

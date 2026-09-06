@@ -5,6 +5,8 @@ df-print: paged
 
 ## R Packages
 
+{{< include /_setup.qmd >}}
+
 ```{r}
 #| label: setup
 #| message: false
@@ -71,8 +73,7 @@ root_graph <- function(a,b,c){
           subtitle = "",
           x = "Real Part",
           y = "Imaginary Part") %>%
-  # gf_text(label = ~discrim, nudge_y = 0.25) %>%
-  gf_refine(coord_cartesian(), theme_classic())
+  # gf_text(label = ~discrim, nudge_y = 0.25)
   
   return(p)
 }
@@ -127,9 +128,8 @@ my_charts_selected %>%
   gf_labs(title = "Roots of Quadratic Equations",
           subtitle = "a, b, c all varying",
           x = "Real Part",
-          y = "Imaginary Part") %>%
-  # gf_text(label = ~discrim, nudge_y = 0.25) %>%
-  gf_refine(coord_cartesian(), theme_classic())
+          y = "Imaginary Part") 
+  # gf_text(label = ~discrim, nudge_y = 0.25) 
   
 
 ```
@@ -167,9 +167,8 @@ expand_grid(
   gf_labs(title = "Roots of Quadratic Equations",
           subtitle = "Slope b = 1, Intercept c varying",
           x = "Real Part",
-          y = "Imaginary Part") %>%
-  # gf_text(label = ~discrim, nudge_y = 0.25) %>%
-  gf_refine(coord_cartesian(), theme_classic())
+          y = "Imaginary Part") 
+  # gf_text(label = ~discrim, nudge_y = 0.25) 
 
 # Slope b = 3
 expand_grid(
@@ -197,9 +196,8 @@ expand_grid(
   gf_labs(title = "Roots of Quadratic Equations",
           subtitle = "Slope b = 3, Intercept c varying",
           x = "Real Part",
-          y = "Imaginary Part") %>%
-  # gf_text(label = ~discrim, nudge_y = 0.25) %>%
-  gf_refine(coord_cartesian(), theme_classic())
+          y = "Imaginary Part")
+  # gf_text(label = ~discrim, nudge_y = 0.25) 
 
 ```
 
@@ -235,9 +233,8 @@ quad_data %>%
   gf_point(Im2 ~ Re2, color = ~ sign) %>% 
   gf_labs(title = "Roots of Quadratic Equations",
           x = "Real Part",
-          y = "Imaginary Part") %>%
-  # gf_text(label = ~discrim, nudge_y = 0.25) %>%
-  gf_refine(coord_fixed(), theme_classic())
+          y = "Imaginary Part") 
+  # gf_text(label = ~discrim, nudge_y = 0.25) 
   
 
 ```
