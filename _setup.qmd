@@ -27,12 +27,12 @@ showtext_auto()
 showtext_opts(dpi = 300)
 
 # Set a site-wide ggplot theme using the loaded fonts
-ggplot2::theme_set(
-  ggplot2::theme_bw(
-    base_size = 14,
-    base_family = "Roboto Condensed"
-  )
-)
+# ggplot2::theme_set(
+#   ggplot2::theme_bw(
+#     base_size = 14,
+#     base_family = "Roboto Condensed"
+#   )
+# )
 
 ## Set the ggplot theme
 theme_madhatter <- function(base_size = 10, exhibit = TRUE) {
@@ -79,14 +79,14 @@ ggplot2::theme_set(theme_madhatter())
 ggplot2::update_geom_defaults(geom = "text", new = list(
   family = "Roboto Condensed",
   face = "plain",
-  size = 3.5,
+  size = 8/ggplot2::.pt, # converting points to "mm" for 8 point 
   color = "#2b2b2b"
 )
 )
 ggplot2::update_geom_defaults(geom = "label", new = list(
   family = "Roboto Condensed",
   face = "plain",
-  size = 3.5,
+  size = 8/ggplot2::.pt, # converting points to "mm" for 8 point 
   color = "#2b2b2b"
 )
 )
