@@ -1,0 +1,17 @@
+{
+  "hash": "2f1df5dc98f637c18243ed97d9e296f9",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Day1\"\nauthor: \"Arvind v\"\ndate: \"2024-10-02\"\ncategories: [news]\n---\n\nThis is the first post in a Quarto blog. Welcome!\n\n![](thumbnail.jpg)\n\nSince this post doesn't specify an explicit `image`, the first image in\nthe post will be used in the listing page of posts.\n\n## Setting up R Packages\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\nlibrary(ggformula)\n```\n:::\n\n\n### Our first graph\n\nLet us look at the variable names:\n\n\n::: {.cell}\n\n```{.r .cell-code}\npenguins %>% names()\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] \"species\"     \"island\"      \"bill_len\"    \"bill_dep\"    \"flipper_len\"\n[6] \"body_mass\"   \"sex\"         \"year\"       \n```\n\n\n:::\n:::\n\n\nOK, let's do a scatter plot: this chart should be automatically\nformatted and themed using the `ggplot2 theme` defined at project root\nin the file `_setup.qmd`.\n\n\n::: {.cell}\n\n```{.r .cell-code}\npenguins %>% drop_na() %>% \n  gf_point(body_mass ~ flipper_len, colour = ~ species, size = 2) %>% \n  gf_labs(title = \"My Penguin Plot\", x = \"Flipper Length\", y = \"Body Mass (gms)\") %>% \n  gf_refine(annotate(geom = \"text\", label = \"Important\\n Points\", x = 220, y = 3500),\n            annotate(geom = \"rect\", xmin = 200, xmax = 210, ymin = 3000, ymax = 5700, alpha = .2),\n            annotate('curve',x = 220, y = 3200,yend = 3000,xend = 205,\n    linewidth = 0.5, curvature = -0.5, arrow = arrow(length = unit(0.25, 'cm')))) %>%\n  \n  ## Labels and Title\n  gf_labs(\n    title = 'Bill Dimensions of Brush-Tailed Penguins (Pygoscelis)',\n    subtitle = 'A scatter plot of bill depth versus bill length.',\n    caption = 'Data: Gorman, Williams & Fraser (2014) PLoS ONE',\n    x = 'Bill Length (mm)', \n    y = 'Bill Depth (mm)',\n    color = 'Body mass (g)'\n  ) \n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/unnamed-chunk-2-1.png){width=672}\n:::\n:::\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
